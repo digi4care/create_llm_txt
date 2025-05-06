@@ -1,5 +1,13 @@
 #!/bin/bash
 
+VERSION="1.0.1"
+TITLE="LLM_TXT & LLM_TREE Generator"
+AUTHOR="Chris Engelhard"
+EMAIL="chris@chrisengelhard.nl"
+WEBSITE="https://www.chrisengelhard.nl"
+COMPANY="Digi4Care"
+_DATE="2025-05-06"
+
 output_file="llm_txt.txt"
 output_tree_file="llm_tree.txt"
 rm -f "$output_file" "$output_tree_file"
@@ -49,5 +57,15 @@ for file in "${files[@]}"; do
     } >> "$output_file"
 done
 
-echo "Boomstructuur geschreven naar $output_tree_file"
-echo "Inhoud bestanden geschreven naar $output_file"
+clear
+printf -- "--------------------------------------------------------------------------------\n"
+printf -- "--- %s --- Version: %s\n" "$TITLE" "$VERSION"
+
+printf -- "--------------------------------------------------------------------------------\n"
+printf -- "--- Author: %s <%s>\n" "$AUTHOR" "$EMAIL"
+printf -- "--- Website: %s\n" "$WEBSITE"
+printf -- "--- Copyright: © %s %s\n" "$(date +'%Y')" "$COMPANY"
+printf -- "--------------------------------------------------------------------------------\n"
+
+printf -- "--- Boomstructuur geschreven naar %s\n" "$output_tree_file"
+printf -- "--- Inhoud bestanden geschreven naar %s\n" "$output_file"
