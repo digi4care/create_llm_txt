@@ -1,108 +1,140 @@
-# LLM_TXT & LLM_TREE Generator
+# 🧠 LLM_TXT Generator
 
-A lightweight Bash utility that prepares source code for ingestion by large language models (LLMs) by generating a single clean `.txt` file that includes a directory tree and all relevant file contents — following the `LLM_TXT` formatting guidelines.
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/chrisengelhard)
+[![Shell](https://img.shields.io/badge/script-bash-lightgrey)](https://www.gnu.org/software/bash/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)](mailto:chris@chrisengelhard.nl)
 
----
-
-## 📌 Overview
-
-`llm_txt.sh` is designed to streamline your entire project into one neatly formatted text file for use in LLMs, such as ChatGPT, Claude, or custom AI agents. It eliminates clutter and ensures proper structure so the model can understand your codebase without distractions.
-
-It produces two output files:
-- `llm_txt.txt`: A complete dump of all relevant code files, clearly separated and labeled.
-- `llm_tree.txt`: A visual tree-style overview of the project directory (excluding irrelevant files/folders).
+> A powerful script that generates a clean, LLM-optimized `.txt` file of your entire project. Ideal for AI prompt engineering, documentation, and audits.
 
 ---
 
-## ✨ Features
+<details>
+<summary>📌 Purpose</summary>
 
-- 📂 Clean directory tree with excluded folders and files.
-- 📄 Full content of your source code, with file boundaries and clear headers.
-- 🚫 Skips common noise like `.git`, `.vscode`, and config files.
-- 🔍 Extension-based file filtering for precise control.
-- 🤖 Follows the `LLM_TXT` standard for optimal AI understanding.
+This script was designed to generate a unified `.txt` file that includes:
+- A clean project **tree structure**
+- The **full contents of all relevant source files**
 
----
+This format follows the `llm_txt` methodology, optimized for input into **Large Language Models (LLMs)** like GPT. It's perfect for use in AI agents, prompt chaining, code analysis, or retrieval-augmented generation.
 
-## 📁 Output Files
-
-| Filename         | Description                                                  |
-|------------------|--------------------------------------------------------------|
-| `llm_txt.txt`    | The main file: includes the project tree and all file contents |
-| `llm_tree.txt`   | Just the directory structure as plain text                    |
+</details>
 
 ---
 
-## 📜 What are the `LLM_TXT` guidelines?
+<details>
+<summary>📁 Example Output (llm_txt.txt)</summary>
 
-The `LLM_TXT` format defines how to structure code and project information in a single `.txt` file so that it can be consumed effectively by large language models.
+```
 
-### The core principles:
+\------------------------ PROJECT TREE ------------------------
+.
+└── README.md
 
-- ✅ All content in **one file**
-- ✅ Clear **file separation** using headers like `---- filename ----`
-- ✅ Exclude unnecessary files and directories (e.g., `.git`, `node_modules`, backups)
-- ✅ Include a **tree overview** at the top to provide structure
-- ✅ Sorted, readable, and minimal — no byte sizes, no timestamps, no extra metadata
+\------------------------ ./README.md ------------------------
 
----
+# LLM\_TXT Generator
 
-## 🧠 Why follow `LLM_TXT`?
+...
 
-When you're feeding code to an LLM, clarity and structure are essential:
-
-- **Context**: The LLM needs to know which file it's reading and how files relate.
-- **Focus**: Removing noise improves the model’s accuracy and reduces token waste.
-- **Speed**: Single-file input means faster uploads and quicker analysis.
-- **Precision**: Clean input helps the model provide better completions, summaries, and refactorings.
-
-> This script ensures your codebase is formatted exactly how an LLM expects it — no prep needed.
-
----
-
-## ⚙️ Usage
-
-### 1. Make the script executable:
-```bash
-chmod +x llm_txt.sh
 ````
 
-### 2. Run the script:
+</details>
+
+---
+
+<details>
+<summary>📜 What is `llm_txt` format?</summary>
+
+The `llm_txt` format is a flat, readable structure used for giving LLMs a complete overview of a project:
+
+✅ All files concatenated into one file
+✅ No binary or noisy files
+✅ Each section clearly marked
+✅ Tree structure as top-level context
+
+> This enables better comprehension by LLMs — especially when used for reasoning, debugging, or interpreting entire codebases.
+
+</details>
+
+---
+
+<details>
+<summary>⚙️ How It Works</summary>
+
+1. **Removes** old `llm_txt.txt`
+2. **Generates** a tree overview of the project
+3. **Finds** all relevant files based on include/exclude rules
+4. **Concatenates** all contents into `llm_txt.txt`
+
+</details>
+
+---
+
+<details>
+<summary>🛠️ Usage</summary>
+
+Run the script from your terminal:
 
 ```bash
-./llm_txt.sh
+bash llm_txt.sh
+````
+
+> ⚠️ Make sure you have `tree` installed:
+
+```bash
+sudo apt install tree
 ```
 
-Two files will be created:
+</details>
+
+---
+
+<details>
+<summary>🚫 What Gets Excluded?</summary>
+
+**Directories:**
+
+* `.git`
+* `.vscode`
+* `.qodo`
+
+**Files:**
 
 * `llm_txt.txt`
-* `llm_tree.txt`
+* `.gitignore`, `kubeconfig`
+* The script itself (`llm_txt.sh`)
+
+You can customize the excluded paths in the script.
+
+</details>
 
 ---
 
-## 🔧 Configuration
+<details>
+<summary>👤 Author</summary>
 
-Within the script, you can customize:
+**Chris Engelhard**
+📧 [chris@chrisengelhard.nl](mailto:chris@chrisengelhard.nl)
+🌐 [www.chrisengelhard.nl](https://www.chrisengelhard.nl)
+🏢 Digi4Care
 
-```bash
-extensions=("*.*")                     # Set which files to include (e.g., "*.js" "*.php")
-exclude_dirs=(".vscode" ".git" ".qodo")  # Skip these folders
-exclude_files=("llm_txt.txt" "kubeconfig")  # Skip these files
-```
-
----
-
-## 👨‍💻 Author
-
-* **Chris Engelhard**
-* 📧 [chris@chrisengelhard.nl](mailto:chris@chrisengelhard.nl)
-* 🌍 [https://www.chrisengelhard.nl](https://www.chrisengelhard.nl)
-* 🏢 Digi4Care
-* 📦 Version: `1.0.1`
-* 📅 Date: `2025-05-06`
+</details>
 
 ---
 
-## 🪪 License
+<details>
+<summary>🪪 License</summary>
 
-This script is open-source and free to use or modify for any personal or commercial purpose.
+This project is licensed under the **MIT License**.
+
+</details>
+
+---
+
+<details>
+<summary>💡 Ideas or Contributions?</summary>
+
+Suggestions are welcome!
+
+</details>
