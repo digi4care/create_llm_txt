@@ -97,7 +97,6 @@ sudo apt install tree
 
 * `.git`
 * `.vscode`
-* `.qodo`
 
 **Files:**
 
