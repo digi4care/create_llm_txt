@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.0.1"
+VERSION="1.1.0"
 TITLE="LLM_TXT & LLM_TREE Generator"
 AUTHOR="Chris Engelhard"
 EMAIL="chris@chrisengelhard.nl"
@@ -12,9 +12,9 @@ output_file="llm_txt.txt"
 output_tree_file="llm_tree.txt"
 rm -f "$output_file" "$output_tree_file"
 
-extensions=("*.yml" "*.ini" "*.j2" "*.cfg" "*.txt")
-exclude_dirs=(".vscode" ".git" ".qodo" "proxmox-pve1")
-exclude_files=("kubeconfig" "llm_txt.txt")
+extensions=("*.*")
+exclude_dirs=(".vscode" ".git" ".qodo")
+exclude_files=("kubeconfig" "llm_txt.txt" "llm_tree.txt" "llm_txt.sh" ".gitignore")
 
 ext_pattern=$(IFS='|'; echo "${extensions[*]}")
 exclude_pattern_dirs=$(IFS='|'; echo "${exclude_dirs[*]}")
@@ -26,8 +26,8 @@ tree_output=$(tree -a -P "$ext_pattern" -I "$exclude_pattern" --du --noreport 2>
 
 echo "$tree_output" > "$output_tree_file"
 
-# Vind bestanden met find (zoals eerder)
-find_cmd="find ."
+# Genereer de find-opdracht met juiste uitsluitingen
+find_cmd="find . -type f"  # Voeg -type f toe om alleen bestanden te vinden
 for dir in "${exclude_dirs[@]}"; do
     find_cmd+=" -not -path \"*/$dir/*\""
 done
@@ -35,6 +35,7 @@ for file in "${exclude_files[@]}"; do
     find_cmd+=" -not -name \"$file\""
 done
 
+# Voeg de extensies toe aan de find-opdracht
 ext_expr=""
 for ext in "${extensions[@]}"; do
     if [[ -z "$ext_expr" ]]; then
@@ -44,11 +45,13 @@ for ext in "${extensions[@]}"; do
     fi
 done
 
+# Voeg de extensie filter toe aan de find-opdracht
 find_cmd+=" \\( $ext_expr \\)"
 
+# Zoek de bestanden, exclusief directories en bestanden uit de uitsluitingen
 mapfile -t files < <(eval "$find_cmd" | sort)
 
-# Append inhoud bestanden
+# Voeg de inhoud van de bestanden toe aan het output bestand
 for file in "${files[@]}"; do
     {
         printf -- "------------------------ %s ------------------------\n" "$file"
@@ -56,6 +59,7 @@ for file in "${files[@]}"; do
         printf "\n"
     } >> "$output_file"
 done
+
 
 clear
 printf -- "--------------------------------------------------------------------------------\n"
